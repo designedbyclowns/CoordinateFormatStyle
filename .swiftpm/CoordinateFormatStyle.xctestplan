@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "D81530BA-C341-43D8-BBA9-425CD6C4DFDB",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CoordinateFormatStyleTests",
+        "name" : "CoordinateFormatStyleTests"
+      }
+    }
+  ],
+  "version" : 1
+}
