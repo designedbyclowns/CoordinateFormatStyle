@@ -12,10 +12,7 @@ extension CLLocationCoordinate2D {
         public typealias ParseOutput = CLLocationCoordinate2D
         
         public func parse(_ value: String) throws -> CLLocationCoordinate2D {
-            return try GeoURI(
-                value,
-                format: GeoURI.FormatStyle()
-            ).coordinate
+            return try GeoURI(string: value).coordinate
         }
     }
 }
