@@ -5,7 +5,7 @@ import Numerics
 
 struct CLLocationCoordinate2D_DegreesDecimalMinutesParseStrategyTests {
     
-    let parseStrategy =  CLLocationCoordinate2D.DegreesDecimalMinutesParseStrategy()
+    let formatStyle = CLLocationCoordinate2D.DegreesDecimalMinutesFormatStyle()
     
     @Test(arguments: [
         ("48° 06.983′ N, 122° 46.516′ W", CLLocationCoordinate2D.portTownsend),
@@ -16,8 +16,11 @@ struct CLLocationCoordinate2D_DegreesDecimalMinutesParseStrategyTests {
         
     ]) func decimalDegrees(arg: (String, CLLocationCoordinate2D)) {
         #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(arg.0)
-            #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.0001))
+            let parsed = try CLLocationCoordinate2D(arg.0, parseStrategy: formatStyle.parseStrategy)
+            #expect(parsed.isApproximatelyEqual(
+                to: arg.1,
+                precision: .decimalPlaces4
+            ))
         }
     }
     
@@ -27,12 +30,12 @@ struct CLLocationCoordinate2D_DegreesDecimalMinutesParseStrategyTests {
         "55°58.750′S,67°16.500′W",
         "55° 58.750' S, 67° 16.500' W",
         "S 55° 58.750′ S, W 67° 16.500′"
-    ]) func patternMatching(string: String) {
+    ]) func patternMatching(text: String) {
         #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(string)
-            #expect(match.isApproximatelyEqual(
+            let parsed = try CLLocationCoordinate2D(text, parseStrategy: formatStyle.parseStrategy)
+            #expect(parsed.isApproximatelyEqual(
                 to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
+                precision: .decimalPlaces4
             ))
         }
     }
@@ -43,13 +46,37 @@ struct CLLocationCoordinate2D_DegreesDecimalMinutesParseStrategyTests {
         "-55°58.750′ -67°16.500′",
         "55°58.750'S 67°16.500'W",
         "S55°58.750′S W67°16.500′"
-    ]) func googleFormat(string: String) {
+    ]) func googleFormat(text: String) {
         #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(string)
-            #expect(match.isApproximatelyEqual(
+            let parsed = try CLLocationCoordinate2D(text, parseStrategy: formatStyle.parseStrategy)
+            #expect(parsed.isApproximatelyEqual(
                 to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
+                precision: .decimalPlaces4
             ))
+        }
+    }
+    
+    @Test func precision() {
+        let style = CLLocationCoordinate2D.DegreesDecimalMinutesFormatStyle()
+        
+        #expect(throws: Never.self) {
+            let parsed = try CLLocationCoordinate2D("-55° 58.750′, -67° 16.500′",
+                                                    parseStrategy: style.parseStrategy.precision(.decimalPlaces3))
+            
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces1) == true)
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces2) == true)
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces3) == true)
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces4) == false)
+        }
+        
+        #expect(throws: Never.self) {
+            let parsed = try CLLocationCoordinate2D("-55° 58.750′, -67° 16.500′",
+                                                    parseStrategy: style.parseStrategy.precision(.decimalPlaces2))
+   
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces1) == true)
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces2) == true)
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces3) == false)
+            #expect(parsed.isApproximatelyEqual(to: .capeHorn, precision: .decimalPlaces4) == false)
         }
     }
 }

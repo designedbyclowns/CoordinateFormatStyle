@@ -16,7 +16,10 @@ struct CLLocationCoordinate2D_ParseStrategy_DecimalDegreesTests {
     ]) func decimalDegrees(arg: (String, CLLocationCoordinate2D)) {
         #expect(throws: Never.self) {
             let match = try parseStrategy.parse(arg.0)
-            #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.0001))
+            #expect(match.isApproximatelyEqual(
+                to: arg.1,
+                precision: .decimalPlaces3)
+            )
         }
     }
     
@@ -31,7 +34,7 @@ struct CLLocationCoordinate2D_ParseStrategy_DecimalDegreesTests {
             let match = try parseStrategy.parse(string)
             #expect(match.isApproximatelyEqual(
                 to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
+                precision: .decimalPlaces3
             ))
         }
     }
@@ -47,7 +50,7 @@ struct CLLocationCoordinate2D_ParseStrategy_DecimalDegreesTests {
             let match = try parseStrategy.parse(string)
             #expect(match.isApproximatelyEqual(
                 to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
+                precision: .decimalPlaces3
             ))
         }
     }

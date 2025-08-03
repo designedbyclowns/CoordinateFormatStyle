@@ -1,27 +1,4 @@
 import CoreLocation
-import Numerics
-
-extension CLLocationCoordinate2D {
-    /// Test if self and other are approximately equal with specified tolerances.
-    /// - Parameters:
-    ///   - other: The value to which self is compared.
-    ///   - absoluteTolerance: The absolute tolerance to use in the comparison.
-    ///   - relativeTolerance: The relative tolerance to use in the comparison. Defaults to zero.
-    /// - Returns: true if self and other are equal, or if they are finite and either.
-    func isApproximatelyEqual(to other: CLLocationCoordinate2D, absoluteTolerance: Double, relativeTolerance: Double = 0) -> Bool {
-        let latitudeIsApproximatelyEqual = latitude.isApproximatelyEqual(
-            to: other.latitude,
-            absoluteTolerance: absoluteTolerance,
-            relativeTolerance: relativeTolerance
-        )
-        let longitudeIsApproximatelyEqual = longitude.isApproximatelyEqual(
-            to: other.longitude,
-            absoluteTolerance: absoluteTolerance,
-            relativeTolerance: relativeTolerance
-        )
-        return latitudeIsApproximatelyEqual && longitudeIsApproximatelyEqual
-    }
-}
 
 extension CLLocationCoordinate2D {
     static let portTownsend = CLLocationCoordinate2D(latitude: 48.11638, longitude: -122.77527)

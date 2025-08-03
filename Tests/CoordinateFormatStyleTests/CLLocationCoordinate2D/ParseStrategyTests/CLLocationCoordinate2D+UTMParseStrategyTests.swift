@@ -18,7 +18,10 @@ struct CLLocationCoordinate2D_UTMParseStrategyTests {
     ]) func decimalDegrees(arg: (String, CLLocationCoordinate2D)) {
         #expect(throws: Never.self) {
             let match = try parseStrategy.parse(arg.0)
-            #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.00001))
+            #expect(match.isApproximatelyEqual(
+                to: arg.1,
+                precision: .decimalPlaces4
+            ))
         }
     }
     
@@ -31,7 +34,7 @@ struct CLLocationCoordinate2D_UTMParseStrategyTests {
             let match = try parseStrategy.parse(string)
             #expect(match.isApproximatelyEqual(
                 to: CLLocationCoordinate2D.portTownsend,
-                absoluteTolerance: 0.00001
+                precision: .decimalPlaces4
             ))
         }
     }

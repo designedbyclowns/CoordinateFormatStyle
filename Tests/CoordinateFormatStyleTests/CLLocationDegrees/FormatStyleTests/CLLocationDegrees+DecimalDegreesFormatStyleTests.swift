@@ -1,8 +1,8 @@
+import Foundation
 import CoreLocation
 import Testing
 import Numerics
 @testable import CoordinateFormatStyle
-import Foundation
 
 struct CLLocationDegrees_DecimalDegreesFormatStyleTests {
     let formatStyle = CLLocationDegrees.DecimalDegreesFormatStyle()

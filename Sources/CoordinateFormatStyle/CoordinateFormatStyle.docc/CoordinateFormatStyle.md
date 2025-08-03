@@ -9,20 +9,28 @@ Qui exercitationem adipisci quidem maxime autem ex consequuntur dolore odio temp
 
 ## Topics
 
+
+
 ### Format Styles
 
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/DecimalDegrees``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/DegreesDecimalMinutes``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/DegreesMinutesSeconds``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/GeoUri``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/UTM``
+- ``DecimalDegreesFormatStyle``
+- ``DegreesDecimalMinutesFormatStyle``
+- ``DegreesMinutesSecondsFormatStyle``
+- ``UTMFormatStyle``
+- ``GeoURIFormatStyle``
 
 ### Parse Strategies
 
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/DecimalDegrees``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/DegreesDecimalMinutes``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/DegreesMinutesSeconds``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/GeoUri``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/UTM``
+- ``DecimalDegreesParseStrategy``
+- ``DegreesDecimalMinutesParseStrategy``
+- ``DegreesMinutesSecondsParseStrategy``
+- ``GeoURIParseStrategy``
+- ``UTMParseStrategy``
 
+### Coordinate Formats
 
+- ``CoordinateFormat/decimalDegrees``
+- ``CoordinateFormat/degreesDecimalMinutes``
+- ``CoordinateFormat/degreesMinutesSeconds``
+- ``CoordinateFormat/utm``
+- ``CoordinateFormat/geoURI``

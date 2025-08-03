@@ -18,7 +18,7 @@ struct CLLocationCoordinate2D_DegreesMinutesSecondsParseStrategyTests {
         
         #expect(throws: Never.self) {
             let match = try parseStrategy.parse(arg.0)
-            #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.001))
+            #expect(match.isApproximatelyEqual(to: arg.1, precision: .decimalPlaces3))
         }
     }
     
@@ -35,14 +35,13 @@ struct CLLocationCoordinate2D_DegreesMinutesSecondsParseStrategyTests {
             let match = try parseStrategy.parse(string)
             #expect(match.isApproximatelyEqual(
                 to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
+                precision: .decimalPlaces3
             ))
         }
     }
     
     // Google uses a space instead of a comma as its delimiter for whatever reason
     @Test(arguments: [
-//            "55°58′45″S 67°16′30″W",
         "55°58'45\"S 67°16'30\"W",
         "S55°58′45″ W67°16′30″",
         "55°58′45″S 67°16′30″W"
@@ -51,7 +50,7 @@ struct CLLocationCoordinate2D_DegreesMinutesSecondsParseStrategyTests {
             let match = try parseStrategy.parse(string)
             #expect(match.isApproximatelyEqual(
                 to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
+                precision: .decimalPlaces3
             ))
         }
     }

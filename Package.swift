@@ -1,5 +1,4 @@
-// swift-tools-version: 6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -18,8 +17,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/designedbyclowns/UTMConversion.git", branch: "15-invalid-coordinate-fix"),
-        .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.0"),
-        .package(url: "https://github.com/designedbyclowns/GeoURI.git", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-numerics.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/designedbyclowns/GeoURI.git", .upToNextMajor(from: "1.0.0")),
     ],
     targets: [
         .target(
@@ -27,6 +26,7 @@ let package = Package(
             dependencies: [
                 .product(name: "UTMConversion", package: "UTMConversion"),
                 .product(name: "GeoURI", package: "GeoURI"),
+                .product(name: "Numerics", package: "swift-numerics"),
             ]
         ),
         .testTarget(
