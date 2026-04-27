@@ -1,5 +1,5 @@
-import Foundation
-import CoreLocation
+public import Foundation
+public import CoreLocation
 import GeoURI
 
 extension CLLocationCoordinate2D.FormatStyle {
@@ -31,6 +31,8 @@ extension CLLocationCoordinate2D.FormatStyle {
     }
 }
 
-extension FormatStyle where Self == CLLocationCoordinate2D.FormatStyle.GeoUri {
-    public static var geoURI: Self { .init() }
+extension CLLocationCoordinate2D.FormatStyle.GeoUri: ParseableFormatStyle {
+    public var parseStrategy: CLLocationCoordinate2D.ParseStrategy.GeoUri {
+        .init()
+    }
 }

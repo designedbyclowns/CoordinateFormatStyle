@@ -1,7 +1,5 @@
-//
-//  Untitled.swift
-//  CoordinateFormatStyle
-//
-//  Created by Jeff Johnston on 9/21/25.
-//
+public import CoreLocation
 
+extension CLLocationCoordinate2D {
+    public struct FormatStyle {}
+}

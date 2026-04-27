@@ -1,5 +1,5 @@
-import Foundation
-import CoreLocation
+public import Foundation
+public import CoreLocation
 
 extension CLLocationCoordinate2D.ParseStrategy {
     
@@ -43,13 +43,5 @@ extension CLLocationCoordinate2D.ParseStrategy {
         // MARK: - Private
         
         let options: ParsingOptions
-    }
-}
-
-
-
-extension CLLocationCoordinate2D.FormatStyle.DecimalDegrees: ParseableFormatStyle {
-    public var parseStrategy: CLLocationCoordinate2D.ParseStrategy.DecimalDegrees {
-        .init()
     }
 }

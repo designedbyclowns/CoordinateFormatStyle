@@ -2,6 +2,7 @@ import CoreLocation
 import Foundation
 
 extension CLLocationDegrees.FormatStyle {
+    
     /// A structure that converts between `CLLocationDegrees` values and
     /// their textual representations using the Degrees, Minutes, Seconds (DMS) format.
     internal struct DegreesMinutesSeconds : Foundation.FormatStyle, Sendable {
@@ -12,27 +13,54 @@ extension CLLocationDegrees.FormatStyle {
         internal var orientation: CoordinateOrientation = .unspecified
         internal var symbolStyle: SymbolStyle
         internal var ordinalStyle: OrdinalDirectionStyle
+        internal var compact: Bool
         
         internal init(
             orientation: CoordinateOrientation = .unspecified,
             symbolStyle: SymbolStyle = .canonical,
-            ordinalStyle: OrdinalDirectionStyle = .suffix
+            ordinalStyle: OrdinalDirectionStyle = .suffix,
+            compact: Bool = false
         ) {
             self.orientation = orientation
             self.symbolStyle = symbolStyle
             self.ordinalStyle = ordinalStyle
+            self.compact = compact
         }
         
         internal func orientation(_ orientation: CoordinateOrientation) -> Self {
-            .init(orientation: orientation, symbolStyle: symbolStyle, ordinalStyle: ordinalStyle)
+            .init(
+                orientation: orientation,
+                symbolStyle: symbolStyle,
+                ordinalStyle: ordinalStyle,
+                compact: compact
+            )
         }
         
         internal func symbolStyle(_ symbolStyle: SymbolStyle) -> Self {
-            .init(orientation: orientation, symbolStyle: symbolStyle, ordinalStyle: ordinalStyle)
+            .init(
+                orientation: orientation,
+                symbolStyle: symbolStyle,
+                ordinalStyle: ordinalStyle,
+                compact: compact
+            )
         }
         
         internal func ordinalStyle(_ ordinalStyle: OrdinalDirectionStyle) -> Self {
-            .init(orientation: orientation, symbolStyle: symbolStyle, ordinalStyle: ordinalStyle)
+            .init(
+                orientation: orientation,
+                symbolStyle: symbolStyle,
+                ordinalStyle: ordinalStyle,
+                compact: compact
+            )
+        }
+        
+        internal func compact(_ compact: Bool) -> Self {
+            .init(
+                orientation: orientation,
+                symbolStyle: symbolStyle,
+                ordinalStyle: ordinalStyle,
+                compact: compact
+            )
         }
         
         internal func format(_ value: CLLocationDegrees) -> String {
@@ -60,11 +88,13 @@ extension CLLocationDegrees.FormatStyle {
                 "\(sec)\(symbolStyle.seconds)"
             ]
             
-            if ordinalStyle == .suffix{
+            if ordinalStyle == .suffix {
                 components.append("\(hemisphere)")
             }
             
-            return components.joined(separator:" ")
+            let separator = compact ? "" : " "
+            
+            return components.joined(separator:separator)
         }
     }
 }

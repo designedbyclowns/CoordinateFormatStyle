@@ -1,17 +1,19 @@
-import Foundation
-import UTMConversion
+public import Foundation
+public import UTMConversion
 
 public extension UTMCoordinate {
     
     /// A structure that converts between `UTMCoordinate` values and
     /// their textual representations.
-    struct FormatStyle : Foundation.FormatStyle, Sendable {
+    struct FormatStyle: Foundation.FormatStyle, Sendable {
         
-        public init(options: DisplayOptions = [.suffix]) {
-            self.options = options
+        public init(
+            compact: Bool = false
+        ) {
+            self.compact = compact
         }
         
-        public var options: DisplayOptions
+        public var compact: Bool
         
         // MARK: - FormatStyle
         
@@ -26,6 +28,10 @@ public extension UTMCoordinate {
             return "\(value.zone)\(band) \(easting)m\(eastingSuffix) \(northing)m\(northingSuffix)"
         }
         
+        public func compact(_ compact: Bool) -> Self {
+            .init(compact: compact)
+        }
+        
         // MARK: - Private
         
         private static let numberStyle = FloatingPointFormatStyle<Double>()
@@ -36,21 +42,21 @@ public extension UTMCoordinate {
             .grouping(.never)
         
         private var eastingSuffix: String {
-            guard options.contains(.suffix) else { return "" }
-            return options.contains(.compact) ?  "E" : " E"
-            
+            return compact ?  "E" : " E"
         }
+        
         private var northingSuffix: String {
-            guard options.contains(.suffix) else { return "" }
-            return options.contains(.compact) ?  "N" : " N"
+            return compact ?  "N" : " N"
         }
     }
 }
 
+/*
 extension FormatStyle where Self == UTMCoordinate.FormatStyle {
-    static var compact: UTMCoordinate.FormatStyle { UTMCoordinate.FormatStyle(options: [.suffix, .compact]) }
-    static var short:  UTMCoordinate.FormatStyle { UTMCoordinate.FormatStyle(options: [.compact]) }
+    static var compact: UTMCoordinate.FormatStyle { UTMCoordinate.FormatStyle(options: [.compact]) }
+    static var short:  UTMCoordinate.FormatStyle { UTMCoordinate.FormatStyle(options: [.signed, .compact]) }
 }
+*/
 
 public extension UTMCoordinate {
     /// Converts `self` to its textual representation.

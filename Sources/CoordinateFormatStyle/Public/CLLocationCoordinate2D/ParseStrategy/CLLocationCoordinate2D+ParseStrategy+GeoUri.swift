@@ -1,5 +1,5 @@
-import Foundation
-import CoreLocation
+public import Foundation
+public import CoreLocation
 import GeoURI
 
 extension CLLocationCoordinate2D.ParseStrategy {
@@ -13,19 +13,5 @@ extension CLLocationCoordinate2D.ParseStrategy {
         public func parse(_ value: String) throws -> CLLocationCoordinate2D {
             return try GeoURI(string: value).coordinate
         }
-    }
-}
-
-
-
-extension CLLocationCoordinate2D.FormatStyle.GeoUri: ParseableFormatStyle {
-    public var parseStrategy: CLLocationCoordinate2D.ParseStrategy.GeoUri {
-        .init()
-    }
-}
-
-extension Foundation.ParseStrategy where Self == CLLocationCoordinate2D.ParseStrategy.GeoUri {
-    public static var geoURI: Self {
-        .init()
     }
 }

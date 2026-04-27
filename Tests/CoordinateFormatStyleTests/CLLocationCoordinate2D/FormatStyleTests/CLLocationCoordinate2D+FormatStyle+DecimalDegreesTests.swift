@@ -13,6 +13,13 @@ struct CLLocationCoordinate2D_FormatStyle_DecimalDegrees_Tests {
         #expect(CLLocationCoordinate2D(latitude: -90.01, longitude: -180.01).formatted(formatStyle) == "")
     }
     
+    @Test func foo() {
+        let coordinate =  CLLocationCoordinate2D(latitude: 90.0, longitude: -180.0)
+        
+        let string = coordinate.formatted(.decimalDegrees.ordinalStyle(.signed).symbolStyle(.canonical))
+        #expect(string ==  "90.0°, -180.0°")
+    }
+    
     @Test func symbolStyle() {
         let coordinate =  CLLocationCoordinate2D(latitude: 90.0, longitude: 180.0)
         

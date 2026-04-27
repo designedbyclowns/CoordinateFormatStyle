@@ -1,12 +1,12 @@
-import Foundation
-import UTMConversion
+public import Foundation
+public import UTMConversion
 import RegexBuilder
 
 public extension UTMCoordinate {
     
     /// A parse strategy for creating `UTMCoordinate` values
     /// from strings formatted using the [Universal Transverse Mercator (UTM)](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) coordinate system.
-    struct ParseStrategy : Foundation.ParseStrategy, Sendable {
+    struct ParseStrategy: Foundation.ParseStrategy, Sendable {
         public typealias ParseInput = String
         public typealias ParseOutput = UTMCoordinate
         

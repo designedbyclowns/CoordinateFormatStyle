@@ -4,8 +4,6 @@ import Testing
 
 struct CLLocationCoordinate2D_FormatStyle_GeoUri_Tests {
     
-    let formatStyle = CLLocationCoordinate2D.FormatStyle.GeoUri()
-
     @Test(arguments: [
         (CLLocationCoordinate2D.portTownsend, "geo:48.11638,-122.77527;crs=wgs84"),
         (CLLocationCoordinate2D.capeHorn, "geo:-55.97917,-67.275;crs=wgs84"),
@@ -14,8 +12,6 @@ struct CLLocationCoordinate2D_FormatStyle_GeoUri_Tests {
         (CLLocationCoordinate2D.amchitkaIsland, "geo:51.37363,179.41535;crs=wgs84"),
         (CLLocationCoordinate2D.nullIsland, "geo:0,0;crs=wgs84")
     ]) func defaultArguments(arg: (CLLocationCoordinate2D, String)) {
-        #expect(arg.0.formatted(formatStyle) == arg.1)
+        #expect(arg.0.formatted(.geoURI) == arg.1)
     }
 }
-
-

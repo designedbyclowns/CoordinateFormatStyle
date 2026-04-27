@@ -1,5 +1,5 @@
-import CoreLocation
-import Foundation
+public import CoreLocation
+public import Foundation
 
 extension String {
     
@@ -11,27 +11,37 @@ extension String {
     /// - Returns: the recognized `CLLocationCoordinate2D` value, or nil.
     public func coordinate() -> CLLocationCoordinate2D?  {
         // Try each parsing strategy individually to avoid existential type issues
-        if let coord = try? self.coordinate(CLLocationCoordinate2D.DecimalDegreesParseStrategy()) {
+        if let coord = try? CLLocationCoordinate2D(self, parseStrategy: .decimalDegrees) {
             return coord
         }
         
-        if let coord = try? self.coordinate(CLLocationCoordinate2D.DegreesDecimalMinutesParseStrategy()) {
+        if let coord = try? CLLocationCoordinate2D(self, parseStrategy: .degreesDecimalMinutes) {
             return coord
         }
         
-        if let coord = try? self.coordinate(CLLocationCoordinate2D.DegreesMinutesSecondsParseStrategy()) {
+        if let coord = try? CLLocationCoordinate2D(self, parseStrategy: .degreesMinutesSeconds) {
             return coord
         }
         
-        if let coord = try? self.coordinate(CLLocationCoordinate2D.UTMParseStrategy()) {
+        if let coord = try? CLLocationCoordinate2D(self, parseStrategy: .utm) {
             return coord
         }
         
-        if let coord = try? self.coordinate(CLLocationCoordinate2D.GeoUriParseStrategy()) {
+        if let coord = try? CLLocationCoordinate2D(self, parseStrategy: .geoURI) {
             return coord
         }
                 
         return nil
+    }
+
+    public func coordinate<F: Foundation.ParseStrategy>(_ style: F) throws -> F.ParseOutput where F.ParseInput == String, F.ParseOutput == CLLocationCoordinate2D {
+        try style.parse(self)
+    }
+    
+    // MARK: - Internal
+    
+    func degrees<F: Foundation.ParseStrategy>(_ style: F) throws -> F.ParseOutput where F.ParseInput == String, F.ParseOutput == CLLocationDegrees {
+        try style.parse(self)
     }
     
     /// Parses a location degrees value from a string.
@@ -40,29 +50,21 @@ extension String {
     /// or Degrees Minutes Seconds formats.
     ///
     /// - Returns: the recognized `CLLocationDegrees` value, or nil.
-    public func degrees() -> CLLocationDegrees? {
+    internal func degrees() -> CLLocationDegrees? {
         // Try each parsing strategy individually to avoid existential type issues
-        if let degrees = try? self.degrees(CLLocationDegrees.DecimalDegreesParseStrategy()) {
+        if let degrees = try? CLLocationDegrees(self, parseStrategy: .decimalDegrees) {
             return degrees
         }
         
-        if let degrees = try? self.degrees(CLLocationDegrees.DegreesDecimalMinutesParseStrategy()) {
+        if let degrees = try? CLLocationDegrees(self, parseStrategy: .degreesDecimalMinutes) {
             return degrees
         }
         
-        if let degrees = try? self.degrees(CLLocationDegrees.DegreesMinutesSecondsParseStrategy()) {
+        if let degrees = try? CLLocationDegrees(self, parseStrategy: .degreesMinutesSeconds) {
             return degrees
         }
                 
         return nil
-    }
-    
-    public func coordinate<F: Foundation.ParseStrategy>(_ style: F) throws -> F.ParseOutput where F.ParseInput == String, F.ParseOutput == CLLocationCoordinate2D {
-        try style.parse(self)
-    }
-    
-    public func degrees<F: Foundation.ParseStrategy>(_ style: F) throws -> F.ParseOutput where F.ParseInput == String, F.ParseOutput == CLLocationDegrees {
-        try style.parse(self)
     }
 }
 
