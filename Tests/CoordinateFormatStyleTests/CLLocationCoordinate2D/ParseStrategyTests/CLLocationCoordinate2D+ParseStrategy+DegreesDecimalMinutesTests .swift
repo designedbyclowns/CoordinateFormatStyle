@@ -27,7 +27,7 @@ struct CLLocationCoordinate2D_ParseStrategy_DegreesDecimalMinutes_Tests {
         "55°58.750′S,67°16.500′W",
         "55° 58.750' S, 67° 16.500' W",
         "S 55° 58.750′ S, W 67° 16.500′"
-    ]) func patternMatching(string: String) async {
+    ]) func patternMatching(string: String) {
         #expect(throws: Never.self) {
             let match = try parseStrategy.parse(string)
             #expect(match.isApproximatelyEqual(
@@ -43,7 +43,7 @@ struct CLLocationCoordinate2D_ParseStrategy_DegreesDecimalMinutes_Tests {
         "-55°58.750′ -67°16.500′",
         "55°58.750'S 67°16.500'W",
         "S55°58.750′S W67°16.500′"
-    ]) func googleFormat(string: String) async {
+    ]) func googleFormat(string: String) {
         #expect(throws: Never.self) {
             let match = try parseStrategy.parse(string)
             #expect(match.isApproximatelyEqual(

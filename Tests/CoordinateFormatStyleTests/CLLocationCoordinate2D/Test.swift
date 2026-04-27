@@ -4,7 +4,7 @@ import Testing
 
 struct Test {
 
-    @Test func examples() async throws {
+    @Test func examples() throws {
         let coordinate = CLLocationCoordinate2D(latitude: -48.876667, longitude: -123.393333)
         
 //        let x = coordinate.formatted(.decimalDegrees.ordinalStyle(.signed))
