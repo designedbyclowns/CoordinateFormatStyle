@@ -19,16 +19,14 @@ struct CLLocationDegrees_ParseStrategy_DecimalDegrees_Tests {
         "s 55.97917°",
         "55.97917° s",
         "S 55.97917° s"
-    ]) func match(string: String) {
-        #expect(throws: Never.self) {
-            let locationDegrees = try parseStrategy.parse(string)
-            #expect(locationDegrees
-                .isApproximatelyEqual(
-                    to: CLLocationCoordinate2D.capeHorn.latitude,
-                    absoluteTolerance: 0.000001
-                )
+    ]) func match(string: String) throws {
+        let locationDegrees = try parseStrategy.parse(string)
+        #expect(locationDegrees
+            .isApproximatelyEqual(
+                to: CLLocationCoordinate2D.capeHorn.latitude,
+                absoluteTolerance: 0.000001
             )
-        }
+        )
     }
     
     @Test(arguments: [

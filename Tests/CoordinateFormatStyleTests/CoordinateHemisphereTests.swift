@@ -9,7 +9,7 @@ struct CoordinateHemisphereTests {
         (CoordinateHemisphere.south, CoordinateOrientation.latitude),
         (CoordinateHemisphere.east, CoordinateOrientation.longitude),
         (CoordinateHemisphere.west, CoordinateOrientation.longitude),
-    ]) func orientation(hemisphere: CoordinateHemisphere, expected: CoordinateOrientation) throws {
+    ]) func orientation(hemisphere: CoordinateHemisphere, expected: CoordinateOrientation) {
         #expect(hemisphere.orientation == expected)
     }
     
@@ -18,7 +18,7 @@ struct CoordinateHemisphereTests {
         (CoordinateHemisphere.south, -90.0...0.0),
         (CoordinateHemisphere.east, 0.0...180.0),
         (CoordinateHemisphere.west, -180.0...0.0),
-    ]) func range(hemisphere: CoordinateHemisphere, expected: ClosedRange<CLLocationDegrees>) throws {
+    ]) func range(hemisphere: CoordinateHemisphere, expected: ClosedRange<CLLocationDegrees>) {
         #expect(hemisphere.range == expected)
     }
 }

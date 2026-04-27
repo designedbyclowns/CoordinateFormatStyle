@@ -23,16 +23,14 @@ struct CLLocationDegrees_ParseStrategy_DegreesDecimalMinutes_Tests {
         "W 55° 58.750′",
         "w 55° 58.750′",
         "W55° 58.750′"
-    ]) func match(string: String) {
-        #expect(throws: Never.self) {
-            let locationDegrees = try parseStrategy.parse(string)
-            #expect(locationDegrees
-                .isApproximatelyEqual(
-                    to: CLLocationCoordinate2D.capeHorn.latitude,
-                    absoluteTolerance: 0.00001
-                )
+    ]) func match(string: String) throws {
+        let locationDegrees = try parseStrategy.parse(string)
+        #expect(locationDegrees
+            .isApproximatelyEqual(
+                to: CLLocationCoordinate2D.capeHorn.latitude,
+                absoluteTolerance: 0.00001
             )
-        }
+        )
     }
     
     @Test func noMatch() {
@@ -103,10 +101,8 @@ struct CLLocationDegrees_ParseStrategy_DegreesDecimalMinutes_Tests {
         ("0° 30.000′ W", -0.5),
         ("0° 30.000′ N", 0.5),
         ("0° 30.000′ E", 0.5),
-    ]) func zeroDegreeHemisphereSign(arg: (String, Double)) {
-        #expect(throws: Never.self) {
-            let value = try parseStrategy.parse(arg.0)
-            #expect(value.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.000001))
-        }
+    ]) func zeroDegreeHemisphereSign(arg: (String, Double)) throws {
+        let value = try parseStrategy.parse(arg.0)
+        #expect(value.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.000001))
     }
 }
