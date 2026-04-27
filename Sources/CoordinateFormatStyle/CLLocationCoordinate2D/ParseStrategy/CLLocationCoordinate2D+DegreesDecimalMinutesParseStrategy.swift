@@ -3,10 +3,11 @@ import CoreLocation
 
 extension CLLocationCoordinate2D {
     
-    /// A `ParseStrategy` that parses a string formatted as Degrees and Decimal Minutes (DDM) into a CLLocationCoordinate2D.
+    /// A parse strategy for creating `CLLocationCoordinate2D` values
+    /// from Degrees and Decimal Minutes (DDM) formatted strings.
     ///
     /// - ``CoordinateFormat/degreesDecimalMinutes``
-    public struct DegreesDecimalMinutesParseStrategy: Foundation.ParseStrategy {
+    public struct DegreesDecimalMinutesParseStrategy: Foundation.ParseStrategy, Sendable {
         
         public init(
             options: ParsingOptions = [.caseInsensitive]

@@ -3,8 +3,9 @@ import CoreLocation
 import GeoURI
 
 extension CLLocationCoordinate2D {
-    /// A `FormatStyle` that converts a `CLLocationCoordinate2D` into a string
-    ///  representation using the ('geo' URI) format.
+    
+    /// A structure that converts between `CLLocationCoordinate2D` values and
+    /// their textual representations using the ['geo' URI](https://geouri.org) scheme format.
     ///
     ///  - ``CoordinateFormat/geoURI``
     public struct GeoUriFormatStyle : Foundation.FormatStyle, Sendable {

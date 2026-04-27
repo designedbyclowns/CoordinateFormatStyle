@@ -4,10 +4,11 @@ import UTMConversion
 
 extension CLLocationCoordinate2D {
     
-    /// A `ParseStrategy` that parses a string in Universal Transverse Mercator (UTM) format into a CLLocationCoordinate2D..
+    /// A parse strategy for creating `CLLocationCoordinate2D` values
+    /// from strings formatted using the [Universal Transverse Mercator (UTM)](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) coordinate system.
     ///
     /// - ``CoordinateFormat/utm``
-    public struct UTMParseStrategy: Foundation.ParseStrategy {
+    public struct UTMParseStrategy: Foundation.ParseStrategy, Sendable {
         
         public init(options: ParsingOptions = [.caseInsensitive]) {
             self.options = options

@@ -1,28 +1,25 @@
 # ``CoordinateFormatStyle``
 
-Vero architecto minima ut et nam et.
+Coordinate formatting and parsing helpers for CLLocationCoordinate2D.
 
 ## Overview
 
-Qui exercitationem adipisci quidem maxime autem ex consequuntur dolore odio temporibus saepe eos. Vel maxime aut itaque ut autem aliquam ipsa. Voluptas laudantium voluptate provident vero et laborum. Soluta dolorem atque qui.
-
+This package provides format styles and parse strategies to convert `CLLocationCoordinate2D` values to and from textual representations.
 
 ## Topics
 
 ### Format Styles
 
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/DecimalDegrees``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/DegreesDecimalMinutes``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/DegreesMinutesSeconds``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/GeoUri``
-- ``CoreLocation/CLLocationCoordinate2D/FormatStyle/UTM``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/DecimalDegreesFormatStyle``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/DegreesDecimalMinutesFormatStyle``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/DegreesMinutesSecondsFormatStyle``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/GeoUriFormatStyle``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/UTMFormatStyle``
 
 ### Parse Strategies
 
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/DecimalDegrees``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/DegreesDecimalMinutes``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/DegreesMinutesSeconds``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/GeoUri``
-- ``CoreLocation/CLLocationCoordinate2D/ParseStrategy/UTM``
-
-
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/DecimalDegreesParseStrategy``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/DegreesDecimalMinutesParseStrategy``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/DegreesMinutesSecondsParseStrategy``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/GeoUriParseStrategy``
+- ``CoordinateFormatStyle/_LocationEssentials/CLLocationCoordinate2D/UTMParseStrategy``

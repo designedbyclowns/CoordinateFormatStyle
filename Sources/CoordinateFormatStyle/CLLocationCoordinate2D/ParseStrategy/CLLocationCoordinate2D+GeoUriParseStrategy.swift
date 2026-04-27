@@ -4,10 +4,11 @@ import GeoURI
 
 extension CLLocationCoordinate2D {
     
-    /// A `ParseStrategy` that parses a GeoURI string into a CLLocationCoordinate2D.
+    /// A parse strategy for creating `CLLocationCoordinate2D` values
+    /// from ['geo' URI](https://geouri.org) formatted strings.
     ///
     /// - ``CoordinateFormat/geoURI``
-    public struct GeoUriParseStrategy: Foundation.ParseStrategy {
+    public struct GeoUriParseStrategy: Foundation.ParseStrategy, Sendable {
         public typealias ParseInput = String
         public typealias ParseOutput = CLLocationCoordinate2D
         

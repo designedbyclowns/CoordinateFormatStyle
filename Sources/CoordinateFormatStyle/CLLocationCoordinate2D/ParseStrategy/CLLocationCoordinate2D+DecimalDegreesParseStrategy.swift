@@ -3,10 +3,11 @@ import CoreLocation
 
 extension CLLocationCoordinate2D {
     
-    /// A `ParseStrategy` that parses a string formatted as Decimal Degrees (DD) into a CLLocationCoordinate2D.
+    /// A parse strategy for creating `CLLocationCoordinate2D` values
+    /// from Decimal Degrees (DD) formatted strings.
     ///
     /// - ``CoordinateFormat/decimalDegrees``
-    public struct DecimalDegreesParseStrategy: Foundation.ParseStrategy {
+    public struct DecimalDegreesParseStrategy: Foundation.ParseStrategy, Sendable {
         
         public init(
             options: ParsingOptions = [.caseInsensitive]

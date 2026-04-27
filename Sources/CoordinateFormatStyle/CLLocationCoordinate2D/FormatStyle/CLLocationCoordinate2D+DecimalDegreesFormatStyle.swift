@@ -3,8 +3,8 @@ import CoreLocation
 
 extension CLLocationCoordinate2D {
     
-    /// A `FormatStyle` that converts a `CLLocationCoordinate2D` into a string
-    ///  representation using the `Decimal Degrees (DD) format.
+    /// A structure that converts between `CLLocationCoordinate2D` values and
+    /// their textual representations using the Decimal Degrees (DD) format.
     ///
     ///  - ``CoordinateFormat/decimalDegrees``
     public struct DecimalDegreesFormatStyle : Foundation.FormatStyle, Sendable {
@@ -48,4 +48,3 @@ extension CLLocationCoordinate2D {
 extension FormatStyle where Self == CLLocationCoordinate2D.DecimalDegreesFormatStyle {
     public static var decimalDegrees:  CLLocationCoordinate2D.DecimalDegreesFormatStyle { .init() }
 }
-

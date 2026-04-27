@@ -3,8 +3,8 @@ import CoreLocation
 
 extension CLLocationCoordinate2D {
     
-    /// A `FormatStyle` that converts a `CLLocationCoordinate2D` into a string
-    ///  representation using the Degrees, Minutes, Seconds (DMS) format.
+    /// A structure that converts between `CLLocationCoordinate2D` values and
+    /// their textual representations using the Degrees, Minutes, Seconds (DMS) format.
     ///
     ///  - ``CoordinateFormat/degreesMinutesSeconds``
     public struct DegreesMinutesSecondsFormatStyle : Foundation.FormatStyle, Sendable {

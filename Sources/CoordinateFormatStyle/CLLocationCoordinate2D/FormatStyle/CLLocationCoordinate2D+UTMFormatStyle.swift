@@ -3,8 +3,9 @@ import CoreLocation
 import UTMConversion
 
 extension CLLocationCoordinate2D {
-    /// A `FormatStyle` that converts a `CLLocationCoordinate2D` into a string
-    ///  representation using the Universal Transverse Mercator (UTM) format.
+    
+    /// A structure that converts between `CLLocationCoordinate2D` values and
+    /// their textual representations using the [Universal Transverse Mercator (UTM)](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) coordinate system.
     ///
     ///  - ``CoordinateFormat/utm``
     public struct UTMFormatStyle : Foundation.FormatStyle, Sendable {
