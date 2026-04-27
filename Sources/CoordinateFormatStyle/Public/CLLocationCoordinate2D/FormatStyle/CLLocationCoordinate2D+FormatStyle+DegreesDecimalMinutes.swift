@@ -2,18 +2,28 @@ public import Foundation
 public import CoreLocation
 
 extension CLLocationCoordinate2D.FormatStyle {
-    
+
     /// A structure that converts between `CLLocationCoordinate2D` values and
     /// their textual representations using the Degrees and Decimal Minutes (DDM) format.
     public struct DegreesDecimalMinutes: Foundation.FormatStyle, Sendable {
-        
+
         public typealias FormatInput = CLLocationCoordinate2D
         public typealias FormatOutput = String
-        
+
+        /// The characters used to annotate degrees and minutes.
         public var symbolStyle: SymbolStyle = .canonical
+
+        /// How the latitude and longitude ordinal direction is rendered.
         public var ordinalStyle: OrdinalDirectionStyle
+
+        /// When `true`, omits whitespace between components for a more compact form.
         public var compact: Bool
-        
+
+        /// Creates a Degrees and Decimal Minutes format style.
+        /// - Parameters:
+        ///   - symbolStyle: The symbol style. Defaults to ``SymbolStyle/canonical``.
+        ///   - ordinalStyle: The ordinal direction style. Defaults to ``OrdinalDirectionStyle/suffix``.
+        ///   - compact: When `true`, omits whitespace between components. Defaults to `false`.
         public init(
             symbolStyle: SymbolStyle = .canonical,
             ordinalStyle: OrdinalDirectionStyle = .suffix,
@@ -23,40 +33,47 @@ extension CLLocationCoordinate2D.FormatStyle {
             self.ordinalStyle = ordinalStyle
             self.compact = compact
         }
-        
+
+        /// Returns a copy of this format style with the given symbol style.
         public func symbolStyle(_ symbolStyle: SymbolStyle) -> Self {
             .init(symbolStyle: symbolStyle, ordinalStyle: ordinalStyle, compact: compact)
         }
-        
+
+        /// Returns a copy of this format style with the given ordinal direction style.
         public func ordinalStyle(_ ordinalStyle: OrdinalDirectionStyle) -> Self {
             .init(symbolStyle: symbolStyle, ordinalStyle: ordinalStyle, compact: compact)
         }
-        
+
+        /// Returns a copy of this format style with the given compact setting.
         public func compact(_ compact: Bool) -> Self {
             .init(symbolStyle: symbolStyle, ordinalStyle: ordinalStyle, compact: compact)
         }
-        
+
+        /// Formats `value` as a Degrees and Decimal Minutes string.
+        /// - Parameter value: The coordinate to format.
+        /// - Returns: A string such as `"48° 06.983′ N, 122° 46.516′ W"`, or an empty string
+        ///   if `value` is not a valid coordinate.
         public func format(_ value: CLLocationCoordinate2D) -> String {
             guard CLLocationCoordinate2DIsValid(value) else { return "" }
-            
+
             let style = CLLocationDegrees.FormatStyle.DegreesDecimalMinutes()
                 .symbolStyle(symbolStyle)
                 .ordinalStyle(ordinalStyle)
                 .compact(compact)
-            
+
             let Φ = style.orientation(.latitude).format(value.latitude)
             let λ = style.orientation(.longitude).format(value.longitude)
-            
+
             guard Φ.isEmpty == false, λ.isEmpty == false else { return "" }
-            
+
             return "\(Φ), \(λ)"
         }
     }
 }
 
 extension CLLocationCoordinate2D.FormatStyle.DegreesDecimalMinutes: ParseableFormatStyle {
+    /// The matching parse strategy for round-tripping with this format style.
     public var parseStrategy: CLLocationCoordinate2D.ParseStrategy.DegreesDecimalMinutes {
         .init()
     }
 }
-

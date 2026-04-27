@@ -34,6 +34,10 @@ extension String {
         return nil
     }
 
+    /// Parses a coordinate value from this string using the provided parse strategy.
+    /// - Parameter style: The parse strategy describing the textual format of this string.
+    /// - Returns: The parsed `CLLocationCoordinate2D`.
+    /// - Throws: A ``ParsingError`` if `style` cannot interpret this string as a coordinate.
     public func coordinate<F: Foundation.ParseStrategy>(_ style: F) throws -> F.ParseOutput where F.ParseInput == String, F.ParseOutput == CLLocationCoordinate2D {
         try style.parse(self)
     }

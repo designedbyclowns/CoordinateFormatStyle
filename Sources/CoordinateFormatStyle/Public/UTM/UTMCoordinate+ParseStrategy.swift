@@ -9,7 +9,11 @@ public extension UTMCoordinate {
     struct ParseStrategy: Foundation.ParseStrategy, Sendable {
         public typealias ParseInput = String
         public typealias ParseOutput = UTMCoordinate
-        
+
+        /// Parses a UTM string into a `UTMCoordinate`.
+        /// - Parameter value: A string such as `"10U 516726m E 5329260m N"`.
+        /// - Returns: The parsed UTM coordinate.
+        /// - Throws: A ``ParsingError`` describing why parsing failed.
         public func parse(_ value: String) throws -> UTMCoordinate {
             let zoneRef = Reference(UTMGridZone.self)
             let bandRef = Reference(UTMLatitudeBand.self)
@@ -107,6 +111,7 @@ public extension UTMCoordinate {
 }
 
 extension UTMCoordinate.FormatStyle: ParseableFormatStyle {
+    /// The matching parse strategy for round-tripping with this format style.
     public var parseStrategy: UTMCoordinate.ParseStrategy {
         .init()
     }

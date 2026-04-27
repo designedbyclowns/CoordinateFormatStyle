@@ -28,7 +28,11 @@ extension CLLocationCoordinate2D {
         style.format(self)
     }
     
-    /// Default format style
+    /// Formats the coordinate using the default format style.
+    ///
+    /// Equivalent to `formatted(.degreesMinutesSeconds.ordinalStyle(.suffix).symbolStyle(.canonical))`.
+    ///
+    /// - Returns: A string such as `"48° 6′ 59″ N, 122° 46′ 31″ W"`.
     public func formatted() -> String  {
         self.formatted(.degreesMinutesSeconds
             .ordinalStyle(.suffix)
