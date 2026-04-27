@@ -2,49 +2,39 @@ import CoreLocation
 import Testing
 import Numerics
 @testable import CoordinateFormatStyle
-import Foundation
 
-/*
 struct CLLocationCoordinate2D_ParseStrategy_UTMTests {
-//    let parseStrategy = CLLocationCoordinate2D.ParseStrategy.UTM()
-    
+
+    let parseStrategy = CLLocationCoordinate2D.ParseStrategy.UTM()
+
     @Test(arguments: [
         ("10U 516726m E 5329260m N", CLLocationCoordinate2D.portTownsend),
         ("19F 607636m E 3794896m N", CLLocationCoordinate2D.capeHorn),
         ("40M 329980m E 9482760m N", CLLocationCoordinate2D.seychelles),
         ("29V 611132m E 6883046m N", CLLocationCoordinate2D.faroeIslands),
         ("60U 668108m E 5694144m N", CLLocationCoordinate2D.amchitkaIsland),
-        ("31N 166021m E 000000m N", CLLocationCoordinate2D.nullIsland)
-        
-    ]) func decimalDegrees(arg: (String, CLLocationCoordinate2D)) {
-        let parseStrategy = CLLocationCoordinate2D.ParseStrategy.UTM()
-        #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(arg.0)
-            #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.00001))
-        }
+        ("31N 166021m E 0000000m N", CLLocationCoordinate2D.nullIsland)
+    ]) func parse(arg: (String, CLLocationCoordinate2D)) throws {
+        let match = try parseStrategy.parse(arg.0)
+        #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.00001))
     }
-    
+
     @Test(arguments: [
         "10U 516726mE 5329260mN",
         "10U   516726m E   5329260m N",
         "10U 516726M e 5329260m n"
-    ]) func utm(string: String) {
-        let parseStrategy = CLLocationCoordinate2D.ParseStrategy.UTM()
-        #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(string)
-            #expect(match.isApproximatelyEqual(
-                to: CLLocationCoordinate2D.portTownsend,
-                absoluteTolerance: 0.00001
-            ))
-        }
+    ]) func patternMatching(string: String) throws {
+        let match = try parseStrategy.parse(string)
+        #expect(match.isApproximatelyEqual(
+            to: CLLocationCoordinate2D.portTownsend,
+            absoluteTolerance: 0.00001
+        ))
     }
-    
+
     @Test func latitudeBandIsRequired() {
-        let parseStrategy = CLLocationCoordinate2D.ParseStrategy.UTM()
-        // Latitude band is required because without it we cant determine the correct latitude.
+        // Without a latitude band the correct latitude cannot be determined.
         #expect(throws: ParsingError.noMatch) {
             try parseStrategy.parse("11 727771mE 5193170mN")
         }
     }
 }
-*/

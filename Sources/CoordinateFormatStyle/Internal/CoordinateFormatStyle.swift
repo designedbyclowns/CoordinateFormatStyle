@@ -1,5 +1,5 @@
 import CoreLocation
-@preconcurrency import RegexBuilder
+import RegexBuilder
 
 struct CoordinateFormatStyle: Sendable {
     static let comma: Character = "\u{002C}"
@@ -83,5 +83,7 @@ struct CoordinateFormatStyle: Sendable {
         return signed
     }
     
-    static let cardinalDirectionRegex = Optionally(.anyOf("NSEW"))
+    static var cardinalDirectionRegex: Optionally<Substring> {
+        Optionally(.anyOf("NSEW"))
+    }
 }

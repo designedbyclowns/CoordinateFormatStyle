@@ -14,11 +14,9 @@ struct CLLocationCoordinate2D_ParseStrategy_DegreesDecimalMinutes_Tests {
         ("51° 22.418′ N, 179° 24.921′ E", CLLocationCoordinate2D.amchitkaIsland),
         ("0° 00.000′ N, 0° 00.000′ E", CLLocationCoordinate2D.nullIsland)
         
-    ]) func decimalDegrees(arg: (String, CLLocationCoordinate2D)) {
-        #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(arg.0)
-            #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.0001))
-        }
+    ]) func decimalDegrees(arg: (String, CLLocationCoordinate2D)) throws {
+        let match = try parseStrategy.parse(arg.0)
+        #expect(match.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.0001))
     }
     
     @Test(arguments: [
@@ -27,14 +25,12 @@ struct CLLocationCoordinate2D_ParseStrategy_DegreesDecimalMinutes_Tests {
         "55°58.750′S,67°16.500′W",
         "55° 58.750' S, 67° 16.500' W",
         "S 55° 58.750′ S, W 67° 16.500′"
-    ]) func patternMatching(string: String) async {
-        #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(string)
-            #expect(match.isApproximatelyEqual(
-                to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
-            ))
-        }
+    ]) func patternMatching(string: String) throws {
+        let match = try parseStrategy.parse(string)
+        #expect(match.isApproximatelyEqual(
+            to: CLLocationCoordinate2D.capeHorn,
+            absoluteTolerance: 0.0001
+        ))
     }
     
     // Google uses a space instead of a comma as its delimiter for whatever reason
@@ -43,13 +39,11 @@ struct CLLocationCoordinate2D_ParseStrategy_DegreesDecimalMinutes_Tests {
         "-55°58.750′ -67°16.500′",
         "55°58.750'S 67°16.500'W",
         "S55°58.750′S W67°16.500′"
-    ]) func googleFormat(string: String) async {
-        #expect(throws: Never.self) {
-            let match = try parseStrategy.parse(string)
-            #expect(match.isApproximatelyEqual(
-                to: CLLocationCoordinate2D.capeHorn,
-                absoluteTolerance: 0.0001
-            ))
-        }
+    ]) func googleFormat(string: String) throws {
+        let match = try parseStrategy.parse(string)
+        #expect(match.isApproximatelyEqual(
+            to: CLLocationCoordinate2D.capeHorn,
+            absoluteTolerance: 0.0001
+        ))
     }
 }

@@ -4,13 +4,13 @@ import CoreLocation
 
 struct CoordinateOrientationTests {
 
-    @Test func range() throws {
+    @Test func range() {
         #expect(CoordinateOrientation.latitude.range == -90.0...90.0)
         #expect(CoordinateOrientation.longitude.range == -180.0...180.0)
         #expect(CoordinateOrientation.unspecified.range == -180.0...180.0)
     }
-    
-    @Test func latHemisphereForDegrees() throws {
+
+    @Test func latHemisphereForDegrees() {
         let orientation = CoordinateOrientation.latitude
         
         #expect(orientation.hemisphere(for: 0.0) == .north)
@@ -23,7 +23,7 @@ struct CoordinateOrientationTests {
         #expect(orientation.hemisphere(for: -90.1) == nil)
     }
     
-    @Test func lonHemisphereForDegrees() throws {
+    @Test func lonHemisphereForDegrees() {
         let orientation = CoordinateOrientation.longitude
         
         #expect(orientation.hemisphere(for: 0.0) == .east)
@@ -36,7 +36,7 @@ struct CoordinateOrientationTests {
         #expect(orientation.hemisphere(for: -180.1) == nil)
     }
     
-    @Test func unspecifiedHemisphereForDegrees() throws {
+    @Test func unspecifiedHemisphereForDegrees() {
         let orientation = CoordinateOrientation.unspecified
         
         #expect(orientation.hemisphere(for: 0.0) == nil)
