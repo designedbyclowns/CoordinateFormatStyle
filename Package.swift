@@ -1,5 +1,4 @@
-// swift-tools-version: 6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -27,7 +26,12 @@ let package = Package(
             dependencies: [
                 .product(name: "UTMConversion", package: "UTMConversion"),
                 .product(name: "GeoURI", package: "GeoURI"),
-            ]
+            ],
+//            swiftSettings: [
+//                .defaultIsolation(MainActor.self),
+//                .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+//                .enableUpcomingFeature("InferIsolatedConformances"),
+//            ]
         ),
         .testTarget(
             name: "CoordinateFormatStyleTests",
@@ -38,3 +42,14 @@ let package = Package(
         ),
     ]
 )
+
+for target in package.targets {
+    var settings = target.swiftSettings ?? []
+    settings.append(contentsOf: [
+//        .defaultIsolation(MainActor.self),
+//        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+//        .enableUpcomingFeature("InferIsolatedConformances"),
+//        .enableUpcomingFeature("InternalImportsByDefault")
+    ])
+    target.swiftSettings = settings
+}
