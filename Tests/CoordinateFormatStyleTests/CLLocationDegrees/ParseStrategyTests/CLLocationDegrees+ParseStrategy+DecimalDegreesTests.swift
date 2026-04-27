@@ -45,14 +45,32 @@ struct CLLocationDegrees_ParseStrategy_DecimalDegrees_Tests {
         "180.01°",
         "-180.01°"
     ]) func invalidRangeDegrees(string: String) {
-        #expect(throws: ParsingError.noMatch) {
+        #expect(throws: ParsingError.invalidRangeDegrees) {
             try parseStrategy.parse(string)
         }
     }
-
+    
     @Test func conflict() {
         #expect(throws: ParsingError.conflict) {
             try parseStrategy.parse("S 55.97917° N")
+        }
+    }
+
+    @Test(arguments: [
+        "90.01°",
+        "-90.01°",
+        "95.0° N"
+    ]) func latitudeOutOfRange(string: String) {
+        let latitudeStrategy = CLLocationDegrees.ParseStrategy.DecimalDegrees(orientation: .latitude)
+        #expect(throws: ParsingError.invalidRangeDegrees) {
+            try latitudeStrategy.parse(string)
+        }
+    }
+
+    @Test func wrongAxisHemisphereThrowsInvalidDirection() {
+        let latitudeStrategy = CLLocationDegrees.ParseStrategy.DecimalDegrees(orientation: .latitude)
+        #expect(throws: ParsingError.invalidDirection) {
+            try latitudeStrategy.parse("55.0° E")
         }
     }
 }

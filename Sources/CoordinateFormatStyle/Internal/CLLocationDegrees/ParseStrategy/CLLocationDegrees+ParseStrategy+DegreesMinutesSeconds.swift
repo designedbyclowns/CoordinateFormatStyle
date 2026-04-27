@@ -12,7 +12,7 @@ internal extension CLLocationDegrees.ParseStrategy {
             orientation: CoordinateOrientation = .unspecified,
             options: ParsingOptions = [.caseInsensitive]
         ) {
-            self.orientation = .unspecified
+            self.orientation = orientation
             self.options = options
         }
         
@@ -56,23 +56,17 @@ internal extension CLLocationDegrees.ParseStrategy {
                 Capture(CoordinateFormatStyle.cardinalDirectionRegex, as: prefixRef)
                 Optionally(.horizontalWhitespace)
                 TryCapture(degreesRegex, as: degreesRef) {
-                    guard let degrees = Double($0), (-180...180).contains(degrees) else {
-                        throw ParsingError.invalidRangeDegrees
-                    }
+                    guard let degrees = Double($0) else { throw ParsingError.noMatch }
                     return degrees
                 }
-                One(.horizontalWhitespace)
+                OneOrMore(.horizontalWhitespace)
                 TryCapture(minutesRegex, as: minutesRef) {
-                    guard let minutes = Double($0), (0.0..<60.0).contains(minutes) else {
-                        throw ParsingError.invalidRangeMinutes
-                    }
+                    guard let minutes = Double($0) else { throw ParsingError.noMatch }
                     return minutes
                 }
-                One(.horizontalWhitespace)
+                OneOrMore(.horizontalWhitespace)
                 TryCapture(secondsRegex, as: secondsRef) {
-                    guard let seconds = Double($0), (0.0..<60.0).contains(seconds) else {
-                        throw ParsingError.invalidRangeMinutes
-                    }
+                    guard let seconds = Double($0) else { throw ParsingError.noMatch }
                     return seconds
                 }
                 Optionally(.horizontalWhitespace)
@@ -84,6 +78,18 @@ internal extension CLLocationDegrees.ParseStrategy {
             
             guard let match = value.desymbolized().firstMatch(of: regex) else {
                 throw ParsingError.noMatch
+            }
+
+            guard (-180.0...180.0).contains(match[degreesRef]) else {
+                throw ParsingError.invalidRangeDegrees
+            }
+
+            guard (0.0..<60.0).contains(match[minutesRef]) else {
+                throw ParsingError.invalidRangeMinutes
+            }
+
+            guard (0.0..<60.0).contains(match[secondsRef]) else {
+                throw ParsingError.invalidRangeSeconds
             }
 
             let hemisphere: CoordinateHemisphere? = try CoordinateFormatStyle.resolveDirection(

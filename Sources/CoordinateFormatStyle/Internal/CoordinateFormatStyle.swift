@@ -48,15 +48,16 @@ struct CoordinateFormatStyle: Sendable {
         orientation: CoordinateOrientation,
         inHemisphere hemisphere: CoordinateHemisphere?
     ) throws -> CLLocationDegrees {
-        var degrees = degrees
         var actualOrientation = orientation
 
+        // The sign comes from the hemisphere when one is provided, otherwise from
+        // the degrees value. Computing it up-front lets a hemisphere-driven sign
+        // survive a degrees value of 0 (e.g. "0° 30′ 0″ S" → -0.5).
+        let isNegative: Bool
         if let hemisphere {
             switch hemisphere {
-            case .south, .west:
-                if degrees > 0 { degrees.negate() }
-            case .north, .east:
-                if degrees < 0 { degrees.negate() }
+            case .south, .west: isNegative = true
+            case .north, .east: isNegative = degrees < 0
             }
 
             if orientation != .unspecified {
@@ -65,23 +66,21 @@ struct CoordinateFormatStyle: Sendable {
             }
 
             actualOrientation = hemisphere.orientation
+        } else {
+            isNegative = degrees < 0
         }
 
-        if let minutes {
-            let minutesAsDegrees = minutes / 60
-            degrees += degrees < 0 ? -minutesAsDegrees : minutesAsDegrees
-        }
+        var magnitude = abs(degrees)
+        if let minutes { magnitude += minutes / 60 }
+        if let seconds { magnitude += seconds / 3600 }
 
-        if let seconds {
-            let secondsAsDegrees = seconds / 3600
-            degrees += degrees < 0 ? -secondsAsDegrees : secondsAsDegrees
-        }
+        let signed = isNegative ? -magnitude : magnitude
 
-        guard actualOrientation.range.contains(degrees) else {
+        guard actualOrientation.range.contains(signed) else {
             throw ParsingError.invalidRangeDegrees
         }
 
-        return degrees
+        return signed
     }
     
     static let cardinalDirectionRegex = Optionally(.anyOf("NSEW"))

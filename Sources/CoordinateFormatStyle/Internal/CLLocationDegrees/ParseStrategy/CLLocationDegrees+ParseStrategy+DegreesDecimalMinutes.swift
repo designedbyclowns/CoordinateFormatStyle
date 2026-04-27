@@ -13,7 +13,7 @@ extension CLLocationDegrees.ParseStrategy {
             orientation: CoordinateOrientation = .unspecified,
             options: ParsingOptions = [.caseInsensitive]
         ) {
-            self.orientation = .unspecified
+            self.orientation = orientation
             self.options = options
         }
         
@@ -51,16 +51,12 @@ extension CLLocationDegrees.ParseStrategy {
                 Capture(CoordinateFormatStyle.cardinalDirectionRegex, as: prefixRef)
                 Optionally(.horizontalWhitespace)
                 TryCapture(degreesRegex, as: degreesRef) {
-                    guard let degrees = Double($0), (-180...180).contains(degrees) else {
-                        throw ParsingError.invalidRangeDegrees
-                    }
+                    guard let degrees = Double($0) else { throw ParsingError.noMatch }
                     return degrees
                 }
                 OneOrMore(.horizontalWhitespace)
                 TryCapture(minutesRegex, as: minutesRef) {
-                    guard let minutes = Double($0), (0..<60).contains(minutes) else {
-                        throw ParsingError.invalidRangeMinutes
-                    }
+                    guard let minutes = Double($0) else { throw ParsingError.noMatch }
                     return minutes
                 }
                 Optionally(.horizontalWhitespace)
@@ -72,6 +68,14 @@ extension CLLocationDegrees.ParseStrategy {
             
             guard let match = value.desymbolized().firstMatch(of: regex) else {
                 throw ParsingError.noMatch
+            }
+
+            guard (-180.0...180.0).contains(match[degreesRef]) else {
+                throw ParsingError.invalidRangeDegrees
+            }
+
+            guard (0.0..<60.0).contains(match[minutesRef]) else {
+                throw ParsingError.invalidRangeMinutes
             }
 
             let hemisphere: CoordinateHemisphere? = try CoordinateFormatStyle.resolveDirection(

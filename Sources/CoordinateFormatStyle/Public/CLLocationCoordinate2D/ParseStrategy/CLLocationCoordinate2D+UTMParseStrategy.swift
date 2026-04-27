@@ -21,7 +21,13 @@ extension CLLocationCoordinate2D.ParseStrategy {
         
         public func parse(_ value: String) throws -> CLLocationCoordinate2D {
             let utm = try UTMCoordinate.ParseStrategy().parse(value)
-            return utm.coordinate()
+            let coordinate = utm.coordinate()
+
+            guard CLLocationCoordinate2DIsValid(coordinate) else {
+                throw ParsingError.invalidCoordinate
+            }
+
+            return coordinate
         }
     }
 }

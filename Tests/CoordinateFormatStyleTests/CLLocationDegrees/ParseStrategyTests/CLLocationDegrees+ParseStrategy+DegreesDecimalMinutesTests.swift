@@ -69,14 +69,44 @@ struct CLLocationDegrees_ParseStrategy_DegreesDecimalMinutes_Tests {
         "20° 60.001′ E",
         "120° 60.001′ W"
     ]) func invalidRangeMinutes(string: String) {
-        #expect(throws: ParsingError.noMatch) {
+        #expect(throws: ParsingError.invalidRangeMinutes) {
             try parseStrategy.parse(string)
         }
     }
-
+    
     @Test func conflict() {
         #expect(throws: ParsingError.conflict) {
             try parseStrategy.parse("N 55° 58.750′ S")
+        }
+    }
+
+    @Test(arguments: [
+        "90° 00.001′",
+        "-90° 00.001′",
+        "95° 00.000′ N"
+    ]) func latitudeOutOfRange(string: String) {
+        let latitudeStrategy = CLLocationDegrees.ParseStrategy.DegreesDecimalMinutes(orientation: .latitude)
+        #expect(throws: ParsingError.invalidRangeDegrees) {
+            try latitudeStrategy.parse(string)
+        }
+    }
+
+    @Test func wrongAxisHemisphereThrowsInvalidDirection() {
+        let latitudeStrategy = CLLocationDegrees.ParseStrategy.DegreesDecimalMinutes(orientation: .latitude)
+        #expect(throws: ParsingError.invalidDirection) {
+            try latitudeStrategy.parse("55° 00.000′ E")
+        }
+    }
+
+    @Test(arguments: [
+        ("0° 30.000′ S", -0.5),
+        ("0° 30.000′ W", -0.5),
+        ("0° 30.000′ N", 0.5),
+        ("0° 30.000′ E", 0.5),
+    ]) func zeroDegreeHemisphereSign(arg: (String, Double)) {
+        #expect(throws: Never.self) {
+            let value = try parseStrategy.parse(arg.0)
+            #expect(value.isApproximatelyEqual(to: arg.1, absoluteTolerance: 0.000001))
         }
     }
 }
